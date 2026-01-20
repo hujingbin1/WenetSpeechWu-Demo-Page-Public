@@ -1368,18 +1368,17 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const bgm = document.getElementById('main-bgm');
-        const overlay = document.getElementById('intro-overlay');
-        const bgmBtn = document.getElementById('bgm-btn');
-        const allAudios = document.querySelectorAll('audio:not(#main-bgm)');
-    
-        let hasStarted = false;
-    
-        // 1. 开门逻辑
-        overlay.addEventListener('click', function() {
-            overlay.classList.add('opened'); // 触发左右滑出的 CSS
-        });
-    });
-    </script>
+      const overlay = document.getElementById('intro-overlay');
+      
+      // 点击遮罩层时，添加 'opened' 类使云朵滑出
+      overlay.addEventListener('click', function() {
+          overlay.classList.add('opened');
+          // 延迟一段时间后将遮罩层的 display 设为 none，防止残留的透明层阻挡点击
+          setTimeout(() => {
+              overlay.style.display = 'none';
+          }, 1500); // 对应 CSS 中 1.5s 的 transition 时间
+      });
+  });
+  </script>
 </body>
 </html>
