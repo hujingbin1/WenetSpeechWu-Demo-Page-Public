@@ -26,11 +26,42 @@
 
 <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
 	<div class="text-center">
-	<h2>WenetSpeech-Wu: </h2>
-      <h3>Datasets, Benchmarks, and Models for</h3>
-	  <h3>a Unified Chinese Wu Dialect Speech Processing Ecosystem</h3>
-		
-	</div>
+    <h2>WenetSpeech-Wu</h2>
+  
+    <h3>Datasets, Benchmarks, and Models for</h3>
+    <h3>a Unified Chinese Wu Dialect Speech Processing Ecosystem</h3>
+  
+    <p>
+      <b>
+        Chengyou Wang<sup>1*</sup>, 
+        Mingchen Shao<sup>1*</sup>, 
+        Jingbin Hu<sup>1*</sup>, 
+        Zeyu Zhu<sup>1*</sup>, 
+        Hongfei Xue<sup>1</sup>,<br>
+        Bingshen Mu<sup>1</sup>, 
+        Xin Xu<sup>2</sup>, 
+        Xingyi Duan<sup>6</sup>, 
+        Binbin Zhang<sup>3</sup>,<br>
+        Pengcheng Zhu<sup>3</sup>, 
+        Chuang Ding<sup>4</sup>, 
+        Xiaojun Zhang<sup>5</sup>, 
+        Hui Bu<sup>2</sup>, 
+        Lei Xie<sup>1†</sup>
+
+      </b>
+      
+    </p>
+  
+    <p>
+      <sup>1</sup> Audio, Speech and Language Processing Group (ASLP@NPU), <br>Northwestern Polytechnical University<br>
+      <sup>2</sup> Beijing AISHELL Technology Co., Ltd.
+      <sup>3</sup> WeNet Open Source Community<br>
+      <sup>4</sup> Moonstep AI
+      <sup>5</sup> Xi’an Jiaotong-Liverpool University
+      <sup>6</sup> YK Pao School
+    </p>
+  </div>
+  
 	<p><b>Abstract</b> 
 		<br>
 		Speech processing for low-resource dialects remains a fundamental challenge in developing inclusive and robust speech technologies.
@@ -725,6 +756,7 @@
   }
 </style>
 
+<!-- <td class="prompt-wav-col" rowspan="10"><audio controls style="width:150px;"><source src="audios/prompt_wav/001050.wav"></audio></td> -->
 
 <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
   <h2 id="TTS" style="text-align:center;">TTS</h2>
@@ -734,10 +766,9 @@
       <thead>
         <tr>
           <th style="min-width:420px;">Text</th>
-          <th class="prompt-wav-col">High-quality Recorded Single Speaker Prompt For Voice Cloning</th>
           <th>CosyVoice2-Wu-SS</th>
           <th>Qwen3-TTS</th>
-          <th class="prompt-wav-col">Prompt Wav For Voice Cloning</th>
+          <th class="prompt-wav-col">Prompt Wav for Voice Cloning</th>
           <th>DiaMoE-TTS</th>
           <th>CosyVoice2</th>
           <th>CosyVoice2-Wu-CPT</th>
@@ -751,7 +782,6 @@
           <td style="text-align:left;">
             昨日夜里向落了一夜雨，今早起来空气特别清爽，马路浪向也干净交关。<br>English Translation:Last night it rained all night. This morning when I woke up, the air was particularly fresh and the road surface was very clean.
           </td>
-          <td class="prompt-wav-col" rowspan="10"><audio controls style="width:150px;"><source src="audios/prompt_wav/001050.wav"></audio></td>
           <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/1.wav"></audio></td>
           <td><audio controls style="width:150px;"><source src="audios/qwen3tts/1.wav"></audio></td>
           <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A0002_S0003_0_G0003_G0004_33.wav"></audio></td>
@@ -881,6 +911,19 @@
           <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A1189_S0004_0_G1377_G1378_188_142_2.wav"></audio></td>
           <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A1189_S0004_0_G1377_G1378_188_142_3.wav"></audio></td>
         </tr>
+        <div class="mt-3" style="font-size:14px; color:#555;">
+          <strong>Note:</strong>
+          CosyVoice2-SS adopts a reference audio (Prompt Wav) for voice style conditioning.
+          The target speaker is Blizzard Challenge 2020-SS1
+          (<a href="http://www.festvox.org/blizzard/bc2020/BC20_zhou_ling_king.pdf"
+              target="_blank" rel="noopener noreferrer">
+              paper
+          </a>).
+          <audio controls style="width:200px; vertical-align:middle; margin-left:10px;">
+            <source src="audios/prompt_wav/001050.wav">
+          </audio>
+        </div>
+        
       </tbody>
     </table>
   </div>
@@ -904,47 +947,6 @@
       </thead>
 
       <tbody>
-        <!-- ================= Prosodic Control ================= -->
-        <tr>
-          <td rowspan="6" class="group-tag">Prosodic<br>Control</td>
-          <td rowspan="3" class="group-type">基频低<br>语速慢<br>(low pitch and <br>slow speaking speed)</td>
-          <td rowspan="3" class="group-inst">音调很低，<br>语速很慢地说<br>(speak with a low pitch <br>and a slow speaking speed)</td>
-          <td class="text-cell">阿拉屋里向养了一只小猫，伊老欢喜晒太阳的，每日下半天总归蹲辣窗口。<br>English Translation:Ala Wu had a little cat at home. She loved to bask in the sun and would always stay by the window for most of the day.</td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-1/baseline_yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_2.wav"></audio></td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-1/yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_2.wav"></audio></td>
-        </tr>
-
-        <tr>
-          <td class="text-cell">今朝早浪向我去买早点的辰光，看见街浪向的樱花已经开哉，蛮漂亮的。<br>English Translation:This morning when I went to buy breakfast, I saw that the cherry blossoms along the street had already bloomed, and they looked very beautiful.</td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-2/baseline_yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-2/yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
-        </tr>
-
-        <tr>
-          <td class="text-cell">今朝是礼拜六，我准备辣屋里向打扫卫生，拿房间理理清爽。<br>English Translation:Today is Saturday. I'm going to do some cleaning in the house and tidy up the rooms to make them look nice and fresh.</td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-3/baseline_yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_446_15.wav"></audio></td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-3/yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_15.wav"></audio></td>
-        </tr>
-
-        <tr>
-          <td rowspan="3" class="group-type">基频高<br>语速快<br>(high pitch and <br>fast speaking speed)</td>
-          <td rowspan="3" class="group-inst">音调很高，<br>语速很快地说<br>(speak with a high pitch <br>and a fast speaking speed)</td>
-          <td class="text-cell">阿拉屋里向养了一只小猫，伊老欢喜晒太阳的，每日下半天总归蹲辣窗口。<br>English Translation:Ala Wu had a little cat at home. She loved to bask in the sun and would always stay by the window for most of the day.</td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-1/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_2.wav"></audio></td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-1/yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_2.wav"></audio></td>
-        </tr>
-
-        <tr>
-          <td class="text-cell">今朝早浪向我去买早点的辰光，看见街浪向的樱花已经开哉，蛮漂亮的。<br>English Translation:This morning when I went to buy breakfast, I saw that the cherry blossoms along the street had already bloomed, and they looked very beautiful.</td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-2/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-2/yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
-        </tr>
-
-        <tr>
-          <td class="text-cell">今朝是礼拜六，我准备辣屋里向打扫卫生，拿房间理理清爽。<br>English Translation:Today is Saturday. I'm going to do some cleaning in the house and tidy up the rooms to make them look nice and fresh.</td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-3/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_15.wav"></audio></td>
-          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-3/yusukuai_jipingao_15_A0004_S0007_0_G0007_G0008_657_15.wav"></audio></td>
-        </tr>
 
         <!-- ================= Emotional Control ================= -->
         <tr>
@@ -1025,6 +1027,49 @@
           <td class="text-cell">啥？侬讲阿拉老师下个号头就要退休啦，伊教书教了三十多年了呀！<br>English Translation:What? You're saying that our teacher is going to retire soon? She has been teaching for over thirty years!</td>
           <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/b_prompt_surprised_040020_11.wav"></audio></td>
           <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/a_prompt_surprised_040020_11.wav"></audio></td>
+        </tr>
+
+
+         <!-- ================= Prosodic Control ================= -->
+         <tr>
+          <td rowspan="6" class="group-tag">Prosodic<br>Control</td>
+          <td rowspan="3" class="group-type">基频低<br>语速慢<br>(low pitch and <br>slow speaking speed)</td>
+          <td rowspan="3" class="group-inst">音调很低，<br>语速很慢地说<br>(speak with a low pitch <br>and a slow speaking speed)</td>
+          <td class="text-cell">阿拉屋里向养了一只小猫，伊老欢喜晒太阳的，每日下半天总归蹲辣窗口。<br>English Translation:Ala Wu had a little cat at home. She loved to bask in the sun and would always stay by the window for most of the day.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-1/baseline_yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_2.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-1/yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_2.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝早浪向我去买早点的辰光，看见街浪向的樱花已经开哉，蛮漂亮的。<br>English Translation:This morning when I went to buy breakfast, I saw that the cherry blossoms along the street had already bloomed, and they looked very beautiful.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-2/baseline_yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-2/yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝是礼拜六，我准备辣屋里向打扫卫生，拿房间理理清爽。<br>English Translation:Today is Saturday. I'm going to do some cleaning in the house and tidy up the rooms to make them look nice and fresh.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-3/baseline_yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_446_15.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-3/yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_15.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td rowspan="3" class="group-type">基频高<br>语速快<br>(high pitch and <br>fast speaking speed)</td>
+          <td rowspan="3" class="group-inst">音调很高，<br>语速很快地说<br>(speak with a high pitch <br>and a fast speaking speed)</td>
+          <td class="text-cell">阿拉屋里向养了一只小猫，伊老欢喜晒太阳的，每日下半天总归蹲辣窗口。<br>English Translation:Ala Wu had a little cat at home. She loved to bask in the sun and would always stay by the window for most of the day.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-1/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_2.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-1/yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_2.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝早浪向我去买早点的辰光，看见街浪向的樱花已经开哉，蛮漂亮的。<br>English Translation:This morning when I went to buy breakfast, I saw that the cherry blossoms along the street had already bloomed, and they looked very beautiful.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-2/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-2/yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝是礼拜六，我准备辣屋里向打扫卫生，拿房间理理清爽。<br>English Translation:Today is Saturday. I'm going to do some cleaning in the house and tidy up the rooms to make them look nice and fresh.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-3/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_15.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-3/yusukuai_jipingao_15_A0004_S0007_0_G0007_G0008_657_15.wav"></audio></td>
         </tr>
       </tbody>
     </table>
