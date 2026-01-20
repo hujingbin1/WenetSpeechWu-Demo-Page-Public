@@ -23,15 +23,15 @@
     <div class="cloud-half right-cloud"></div>
     <div class="intro-content">
         <div id="cloud-icon">☁️</div>
-        <p class="touch-text">点击开启烟雨吴语(Click to open the Misty Wuyu)</p>
+        <p class="touch-text">点击开启吴语世界(Click to enter the world of Wu dialect)</p>
     </div>
 </div>
 
-<audio id="main-bgm" src="bgm/bgm.MP3" loop preload="auto"></audio>
+<!-- <audio id="main-bgm" src="bgm/bgm.MP3" loop preload="auto"></audio>
 
 <div id="bgm-btn">
     <span id="bgm-icon">🎵</span>
-</div>
+</div> -->
 
 <!-- <div id="intro-overlay">
     <div class="cloud-content">
@@ -1291,7 +1291,7 @@
 </article>
 </main>
 </div>
-<script>
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function() {
       const bgm = document.getElementById('main-bgm');
       const overlay = document.getElementById('intro-overlay');
@@ -1364,7 +1364,22 @@
           });
       });
   });
-  </script>
-  
+  </script> -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bgm = document.getElementById('main-bgm');
+        const overlay = document.getElementById('intro-overlay');
+        const bgmBtn = document.getElementById('bgm-btn');
+        const allAudios = document.querySelectorAll('audio:not(#main-bgm)');
+    
+        let hasStarted = false;
+    
+        // 1. 开门逻辑
+        overlay.addEventListener('click', function() {
+            overlay.classList.add('opened'); // 触发左右滑出的 CSS
+        });
+    });
+    </script>
 </body>
 </html>
