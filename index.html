@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>WenetSpeech-Wu</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>WenetSpeech-Wu: </h2>
+      <h3>Datasets, Benchmarks, and Models for</h3>
+	  <h3>a Unified Chinese Wu Dialect Speech Processing Ecosystem</h3>
+		
+	</div>
+	<p><b>Abstract</b> 
+		<br>
+		Speech processing for low-resource dialects remains a fundamental challenge in developing inclusive and robust speech technologies.
+		Despite its linguistic significance and large speaker population, the Wu dialect of Chinese has long been hindered by the lack of large-scale speech data, standardized evaluation benchmarks, and publicly available models.
+		In this work, we present <strong>WenetSpeech-Wu</strong>, the first large-scale, multi-dimensionally annotated open-source speech corpus for the Wu dialect, comprising approximately 8,000 hours of diverse speech data.
+		Building upon this dataset, we introduce <strong>WenetSpeech-Wu-Bench</strong>, the first standardized and publicly accessible benchmark for systematic evaluation of Wu dialect speech processing, covering automatic speech recognition (ASR), Wu-to-Mandarin translation, speaker attribute prediction, speech emotion recognition, text-to-speech (TTS) synthesis, and instruction-following TTS (instruct TTS).
+		Furthermore, we release a suite of strong open-source models trained on WenetSpeech-Wu, establishing competitive performance across multiple tasks and empirically validating the effectiveness of the proposed dataset.
+		Together, these contributions lay the foundation for a comprehensive Wu dialect speech processing ecosystem, and we open-source proposed datasets, benchmarks, and models to support future research on dialectal speech intelligence
+	
+	<p>
+	<b>Contents</b>
+      <ul>
+        <li><a href="#Datapipline—Overview">Data Overview</a></li>
+		<!-- <li><a href="#Demo Video">Demo Video</a></li> -->
+		 <li><a href="#Data-Samples">Data Samples</a></li>
+		 <li><a href="#ASR-Leaderboard">ASR Leaderboard</a></li>
+        <li><a href="#TTS-Evaluation">TTS Evaluation</a></li>
+		<li><a href="#TTS">TTS</a></li>
+		<li><a href="#Instruct-TTS">Instruct TTS</a></li>
+      </ul>
+	</p>
+
+	<!-- <p><b>This page is for research demonstration purposes only.</b></p> -->
+
+
+
+
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">		
+	<h2 id="Datapipline—Overview" style="text-align: center;">Data Overview</h2>
+	<body>
+	<p style="text-align: center;">
+		<img src="pics/pipeline.png" height="500" width="1000">
+	</p>
+	</body>
+		<p style="text-align: center;" >
+			<b>Figure 1.</b> Data construction pipeline for WenetSpeech-Wu.
+		</p>
+</div>
+
+<!-- <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Demo Video" style="text-align: center;">Demo Video</h2>
+	<video controls width="100%" style="max-width:720px;margin:1rem auto;display:block;">
+	  <source src="media/demo_video.mov" type="video/mp4">
+	  您的浏览器不支持 video 标签。
+	</video>
+  </div> -->
+
+
+<style>
+	body {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+		margin: 0;
+		padding: 20px;
+		background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+		min-height: 100vh;
+	}
+	.container {
+		max-width: 1500px;
+		margin: 0 auto;
+		background: rgba(255, 255, 255, 0.9);
+		backdrop-filter: blur(12px);
+		padding: 36px;
+		border-radius: 22px;
+		box-shadow:
+			0 12px 40px rgba(31, 38, 135, 0.18),
+			0 2px 8px rgba(0, 0, 0, 0.06);
+		border: 2px solid rgba(255, 255, 255, 0.7);
+	}	
+	h1 {
+		text-align: center;
+		color: #2c3e50;
+		margin-bottom: 30px;
+		font-weight: 600;
+		font-size: 2.2rem;
+		letter-spacing: -0.5px;
+	}
+	table {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0;
+		margin: 24px 0;
+		background: white;
+		border-radius: 18px;
+		overflow: hidden;
+		box-shadow:
+			0 6px 18px rgba(0, 0, 0, 0.08),
+			0 1px 3px rgba(0, 0, 0, 0.04);
+		border: 1.5px solid #e5eaf2;
+	}
+	th, td {
+		padding: 18px 16px;
+		text-align: center;
+		border-bottom: 1.5px solid #e6ebf2; 
+	}
+	th {
+		background: linear-gradient(to bottom, #4a6fa5, #3a5a8a);
+		color: white;
+		font-weight: 600;
+		font-size: 1.05rem;
+		position: sticky;
+		top: 0;
+	}
+	tr:not(:last-child) td {
+		border-bottom: 1px solid #eef2f7;
+	}
+	tr:nth-child(even) {
+		background-color: #f8fafc;
+	}
+	tr:hover {
+		background-color: #f0f7ff;
+		transition: background-color 0.2s ease;
+	}
+	.model-name {
+		text-align: left;
+		font-weight: 600;
+		color: #2c3e50;
+		padding-left: 20px;
+	}
+	.highlight {
+		background-color: #e3f2fd !important;
+		position: relative;
+	}
+	.highlight::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(135deg, rgba(66, 133, 244, 0.1) 0%, rgba(66, 133, 244, 0.05) 100%);
+		pointer-events: none;
+	}
+	.best-score {
+		background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+		font-weight: bold;
+		color: #2e7d32;
+	}
+	.note {
+		margin-top: 24px;
+		padding: 22px;
+		background: rgba(232, 245, 233, 0.75);
+		border-left: 6px solid #4caf50;
+		border-radius: 12px;
+		font-size: 0.96rem;
+		color: #2c3e50;
+		backdrop-filter: blur(6px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+	}
+	.note p {
+		margin: 8px 0;
+	}
+	.note strong {
+		color: #2e7d32;
+	}
+	.metric-header {
+		font-size: 0.9rem;
+		opacity: 0.9;
+	}
+	@media screen and (max-width: 768px) {
+		table {
+			font-size: 0.9rem;
+		}
+		th, td {
+			padding: 12px 8px;
+		}
+		.model-name {
+			padding-left: 12px;
+		}
+	}
+</style>
+
+<h3 id="Data-Samples" style="text-align: center;">Data Samples<a name="data_samples"></a></h3>
+
+<table style="width:100%; border-collapse:collapse; text-align:center;">
+  <thead>
+    <tr>
+      <th style="width:12%;">Domain</th>
+      <th style="width:44%;">Sample 1</th>
+      <th style="width:44%;">Sample 2</th>
+    </tr>
+  </thead>
+  <tbody>
+
+<!-- ================= Audiobook ================= -->
+<tr>
+  <td><b>Audiobook</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Audiobook/22332712279_ZFVrn_52_5880.wav"></audio><br>
+    <small>而宋子文搭子宋美龄搭子端纳呢侪没经过搜查</small><br>
+    <small><b>Confidence:</b> 0.823 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.19 | <b>SNR:</b> 19.93</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Audiobook/223327122472_MOXt1_52_5860.wav"></audio><br>
+    <small>借搿个机会纷纷响应搿个辰光奥地利个老皇帝已经死脱了</small><br>
+    <small><b>Confidence:</b> 0.808 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.54 | <b>SNR:</b> 40.60</small>
+  </td>
+</tr>
+
+<!-- ================= Children ================= -->
+<tr>
+  <td><b>Children</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Children/223327123108_v7RhP_110_8039.wav"></audio><br>
+    <small>呃大灰狼就跟山羊奶奶讲山羊奶奶侬一家头蹲阿拉决定拿这点物事侪送拨侬</small><br>
+    <small><b>Confidence:</b> 0.842 | <b>Gender:</b> Female</small><br>
+    <small><b>DNSMOS:</b> 0.81 | <b>SNR:</b> 6.90</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Children/223327125017_iUyFc_15_7340.wav"></audio><br>
+    <small>胖胖又得意了啥人会得想到玩具汽车里头还囥了物事呢</small><br>
+    <small><b>Confidence:</b> 0.800 | <b>Gender:</b> Female</small><br>
+    <small><b>DNSMOS:</b> 2.89 | <b>SNR:</b> 32.48</small>
+  </td>
+</tr>
+
+<!-- ================= Commentary ================= -->
+<tr>
+  <td><b>Commentary</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Commentary/224023060419_CSz76_66_8220.wav"></audio><br>
+    <small>这物事里头是有利益分配的讲好个埃种大生意难做一趟做两三年也做不出的</small><br>
+    <small><b>Confidence:</b> 0.800 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.71 | <b>SNR:</b> 44.49</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Commentary/223327120742_EbBPN_37_6960.wav"></audio><br>
+    <small>这个新生儿啊相对来讲偏少大家侪不愿意生嘛</small><br>
+    <small><b>Confidence:</b> 0.876 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.00 | <b>SNR:</b> 47.81</small>
+  </td>
+</tr>
+
+<!-- ================= Culture ================= -->
+<tr>
+  <td><b>Culture</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Culture/223327122594_1JW6p_41_7720.wav"></audio><br>
+    <small>这自然应该是像上海大都市这能介告诉伊虽然伊同样是外来的闲话</small><br>
+    <small><b>Confidence:</b> 0.818 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.95 | <b>SNR:</b> 34.59</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Culture/22332711759_kRXWs_46_5860.wav"></audio><br>
+    <small>已经有西南亚洲的外国人居住辣辣埃及从事贸易活动</small><br>
+    <small><b>Confidence:</b> 0.846 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.63 | <b>SNR:</b> 38.10</small>
+  </td>
+</tr>
+
+<!-- ================= Education ================= -->
+<tr>
+  <td><b>Education</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Education/223327119763_Bvjtk_37_7480.wav"></audio><br>
+    <small>青春的舞龙唱出短暂的曲子的清风里后世</small><br>
+    <small><b>Confidence:</b> 0.825 | <b>Gender:</b> Female</small><br>
+    <small><b>DNSMOS:</b> 1.37 | <b>SNR:</b> 23.99</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Education/223327121325_nh7uf_216_7600.wav"></audio><br>
+    <small>肠道菌群也就是阿拉肠道当中不同种类的细菌等微生物会的影响大脑的健康</small><br>
+    <small><b>Confidence:</b> 0.871 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.25 | <b>SNR:</b> 46.22</small>
+  </td>
+</tr>
+
+<!-- ================= Entertainment ================= -->
+<tr>
+  <td><b>Entertainment</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Entertainment/223327124386_fyKrv_157_7300.wav"></audio><br>
+    <small>老百姓大家知了伊也勿中浪向摊头浪向吃两碗豆腐花</small><br>
+    <small><b>Confidence:</b> 0.863 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.30 | <b>SNR:</b> 20.07</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Entertainment/223327130303_bURyP_55_5740.wav"></audio><br>
+    <small>孙女告娘当我儿子看我讲的闲话</small><br>
+    <small><b>Confidence:</b> 0.857 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.25 | <b>SNR:</b> 14.46</small>
+  </td>
+</tr>
+
+<!-- ================= Interview ================= -->
+<tr>
+  <td><b>Interview</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Interview/2233271261_gCeoE_71_6840.wav"></audio><br>
+    <small>呃对伐现在实际上是新上海人越来越多了外加未来我觉着这群新上海人会得取代脱阿拉</small><br>
+    <small><b>Confidence:</b> 0.814 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.84 | <b>SNR:</b> 11.34</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Interview/22332712272_dt9i4_318_11960.wav"></audio><br>
+    <small>有搿种爷娘对伐但是我觉着现在好像就讲上海哦现在勿是侪讲房子也没人住嘛外国人跑得一批还有就是叫低生育率帮低结婚率嗯</small><br>
+    <small><b>Confidence:</b> 0.900 | <b>Gender:</b> Female</small><br>
+    <small><b>DNSMOS:</b> 3.14 | <b>SNR:</b> 33.88</small>
+  </td>
+</tr>
+
+<!-- ================= Music ================= -->
+<tr>
+  <td><b>Music</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Music/223327125596_ZWm4I_1_12240.wav"></audio><br>
+    <small>当侬老了一个人头发花白坐辣盖落花旁边轻轻的从书架上面取下一本书来慢慢叫的阅读</small><br>
+    <small><b>Confidence:</b> 0.822 | <b>Gender:</b> Female</small><br>
+    <small><b>DNSMOS:</b> 2.57 | <b>SNR:</b> 50.29</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Music/223327125596_ZWm4I_16_5780.wav"></audio><br>
+    <small>伴着夕阳的余晖一切侪是最美好的样子</small><br>
+    <small><b>Confidence:</b> 0.858 | <b>Gender:</b> Female</small><br>
+    <small><b>DNSMOS:</b> 3.32 | <b>SNR:</b> 44.57</small>
+  </td>
+</tr>
+
+<!-- ================= News ================= -->
+<tr>
+  <td><b>News</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/News/21929985620_KD8WX_255_5780.wav"></audio><br>
+    <small>勿晓得个呀老早勿是讲旧社会个辰光嘛搿种流氓阿了</small><br>
+    <small><b>Confidence:</b> 0.804 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.40 | <b>SNR:</b> 31.13</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/News/219299857220_ApkyE_95_5940.wav"></audio><br>
+    <small>观众朋友们就是教个小诀窍就是屋里向大家一直拌馄饨芯子啊</small><br>
+    <small><b>Confidence:</b> 0.943 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.44 | <b>SNR:</b> 37.91</small>
+  </td>
+</tr>
+
+<!-- ================= Podcast ================= -->
+<tr>
+  <td><b>Podcast</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Podcast/223327129788_wmj9K_106_5780.wav"></audio><br>
+    <small>哦对的对的侬讲了对的哎哟这小米侬还是侬脑子好</small><br>
+    <small><b>Confidence:</b> 0.909 | <b>Gender:</b> Female</small><br>
+    <small><b>DNSMOS:</b> 3.60 | <b>SNR:</b> 42.27</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Podcast/224023060303_kQch9_429_7600.wav"></audio><br>
+    <small>嗯沿海各地包括㑚南翔连是日本海的前头一个费城</small><br>
+    <small><b>Confidence:</b> 0.844 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.27 | <b>SNR:</b> 25.60</small>
+  </td>
+</tr>
+
+<!-- ================= RadioDrama ================= -->
+<tr>
+  <td><b>RadioDrama</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/RadioDrama/223327118807_LKwzl_270_6160.wav"></audio><br>
+    <small>侬就没命了为了不叫类似的事体再发生张晨</small><br>
+    <small><b>Confidence:</b> 0.843 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.25 | <b>SNR:</b> 48.05</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/RadioDrama/223327118769_4kMcH_397_5900.wav"></audio><br>
+    <small>其实这两年我也就是行尸走肉因为老婆没了</small><br>
+    <small><b>Confidence:</b> 0.821 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.43 | <b>SNR:</b> 26.43</small>
+  </td>
+</tr>
+
+<!-- ================= Vlog ================= -->
+<tr>
+  <td><b>Vlog</b></td>
+  <td>
+    <audio controls src="audios/domain_samples/Vlog/22332713042_D5s1n_239_8460.wav"></audio><br>
+    <small>对的呀末伊拉这评论里向有种侬要讲一个人真个红了对勿啦就讲侬粉丝超过一万了嘛侬这种黑粉丝多</small><br>
+    <small><b>Confidence:</b> 0.844 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 2.42 | <b>SNR:</b> 17.01</small>
+  </td>
+  <td>
+    <audio controls src="audios/domain_samples/Vlog/223327128304_bs461_145_5760.wav"></audio><br>
+    <small>正常保养电池呃电瓶啊搿种轮胎啊还有</small><br>
+    <small><b>Confidence:</b> 0.841 | <b>Gender:</b> Male</small><br>
+    <small><b>DNSMOS:</b> 3.68 | <b>SNR:</b> 26.10</small>
+  </td>
+</tr>
+
+  </tbody>
+</table>
+
+<div class="table-responsive">
+<h2 id="ASR-Leaderboard" style="text-align:center;">ASR Leaderboard</h2>
+
+<table class="table table-bordered table-sm align-middle text-center">
+  <caption style="caption-side: bottom; text-align: left; padding-top: 8px;">
+    ASR results (CER %) on various test sets.
+    <span style="background-color: rgba(200,200,200,0.4); padding: 2px 6px;">gray</span>,
+    <span style="background-color: rgba(255,182,193,0.45); padding: 2px 6px;">red</span>,
+    <span style="background-color: rgba(144,238,144,0.35); padding: 2px 6px;">light green</span>,
+    and
+    <span style="background-color: rgba(0,128,0,0.25); padding: 2px 6px;">dark green</span>
+    rows denote open-source baselines, commercial models, ASR models trained on WenetSpeech-Wu,
+    and annotation models trained on in-house data, respectively.
+    <strong>Bold</strong> numbers indicate best results;
+    <u>underlined</u> numbers indicate second-best results.
+  </caption>
+
+  <thead>
+    <tr>
+      <th rowspan="2">Category</th>
+      <th rowspan="2">Model</th>
+      <th colspan="2">In-House</th>
+      <th>WS-Wu-Bench</th>
+    </tr>
+    <tr>
+      <th>Dialogue CER (%) ↓</th>
+      <th>Reading CER (%) ↓</th>
+      <th>ASR CER (%) ↓</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <!-- ASR Models -->
+    <tr>
+      <td rowspan="11" style="font-weight:bold; background-color:#fafafa;">
+        ASR Models
+      </td>
+      <td style="background-color: rgba(200,200,200,0.4);">Paraformer</td>
+      <td style="background-color: rgba(200,200,200,0.4);">63.13</td>
+      <td style="background-color: rgba(200,200,200,0.4);">66.85</td>
+      <td style="background-color: rgba(200,200,200,0.4);">64.92</td>
+    </tr>
+
+    <tr style="background-color: rgba(200,200,200,0.4);">
+      <td>SenseVoice-small</td>
+      <td>29.20</td>
+      <td>31.00</td>
+      <td>46.85</td>
+    </tr>
+    <tr style="background-color: rgba(200,200,200,0.4);">
+      <td>Whisper-medium</td>
+      <td>79.31</td>
+      <td>83.94</td>
+      <td>78.24</td>
+    </tr>
+    <tr style="background-color: rgba(200,200,200,0.4);">
+      <td>FireRedASR-AED-L</td>
+      <td>51.34</td>
+      <td>59.92</td>
+      <td>56.69</td>
+    </tr>
+    <tr style="background-color: rgba(200,200,200,0.4);">
+      <td>Step-Audio2-mini</td>
+      <td>24.27</td>
+      <td>24.01</td>
+      <td>26.72</td>
+    </tr>
+
+    <tr style="background-color: rgba(255,182,193,0.45);">
+      <td>Qwen3-ASR</td>
+      <td>23.96</td>
+      <td>24.13</td>
+      <td>29.31</td>
+    </tr>
+    <tr style="background-color: rgba(255,182,193,0.45);">
+      <td>Tencent-Cloud-ASR</td>
+      <td>23.25</td>
+      <td>25.26</td>
+      <td>29.48</td>
+    </tr>
+    <tr style="background-color: rgba(255,182,193,0.45);">
+      <td>Gemini-2.5-pro</td>
+      <td>85.50</td>
+      <td>84.67</td>
+      <td>89.99</td>
+    </tr>
+
+    <tr style="background-color: rgba(144,238,144,0.35);">
+      <td>Conformer-U2pp-Wu</td>
+      <td>15.20</td>
+      <td>12.24</td>
+      <td>15.14</td>
+    </tr>
+    <tr style="background-color: rgba(144,238,144,0.35);">
+      <td>Whisper-medium-Wu</td>
+      <td>14.19</td>
+      <td>11.09</td>
+      <td><u>14.33</u></td>
+    </tr>
+    <tr style="background-color: rgba(144,238,144,0.35);">
+      <td>Step-Audio2-Wu-ASR</td>
+      <td><u>8.68</u></td>
+      <td>7.86</td>
+      <td><strong>12.85</strong></td>
+    </tr>
+
+    <!-- Annotation Models -->
+    <tr>
+      <td rowspan="4" style="font-weight:bold; background-color:#fafafa;">
+        Annotation Models
+      </td>
+      <td style="background-color: rgba(200,200,200,0.4);">Dolphin-small</td>
+      <td style="background-color: rgba(200,200,200,0.4);">24.78</td>
+      <td style="background-color: rgba(200,200,200,0.4);">27.29</td>
+      <td style="background-color: rgba(200,200,200,0.4);">26.93</td>
+    </tr>
+
+    <tr style="background-color: rgba(255,182,193,0.45);">
+      <td>TeleASR</td>
+      <td>29.07</td>
+      <td>21.18</td>
+      <td>30.81</td>
+    </tr>
+
+    <tr style="background-color: rgba(0,128,0,0.25);">
+      <td>Step-Audio2-FT</td>
+      <td><strong>8.02</strong></td>
+      <td><strong>6.14</strong></td>
+      <td>15.64</td>
+    </tr>
+
+    <tr style="background-color: rgba(0,128,0,0.25);">
+      <td>Tele-CTC-FT</td>
+      <td>11.90</td>
+      <td><u>7.23</u></td>
+      <td>23.85</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+<div class="table-responsive">
+<h2 id="TTS Evaluation" style="text-align:center;">TTS Evaluation</h2>
+  <table class="table table-bordered table-sm align-middle text-center">
+    <caption style="caption-side: bottom; text-align: left; padding-top: 8px;">
+      TTS results on WenetSpeech-Wu-Bench.
+      <strong>Bold</strong> and <u>underlined</u> values denote the best and second-best results, respectively;
+      <span style="background-color: rgba(144,238,144,0.35); padding: 2px 6px;">
+        light green
+      </span>
+      rows indicate models trained on WenetSpeech-Wu or further fine-tuned on an internal high-quality dataset.
+    </caption>
+
+    <thead>
+      <tr>
+        <th rowspan="2">Model</th>
+        <th colspan="5">WS-Wu-Eval-TTS-easy</th>
+        <th colspan="5">WS-Wu-Eval-TTS-hard</th>
+      </tr>
+      <tr>
+        <th>CER (%) ↓</th>
+        <th>SIM ↑</th>
+        <th>IMOS ↑</th>
+        <th>SMOS ↑</th>
+        <th>AMOS ↑</th>
+        <th>CER (%) ↓</th>
+        <th>SIM ↑</th>
+        <th>IMOS ↑</th>
+        <th>SMOS ↑</th>
+        <th>AMOS ↑</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Qwen3-TTS<sup>†</sup></td>
+        <td><u>5.95</u></td>
+        <td>--</td>
+        <td><u>4.35</u></td>
+        <td>--</td>
+        <td><u>4.19</u></td>
+        <td><u>16.45</u></td>
+        <td>--</td>
+        <td><u>4.03</u></td>
+        <td>--</td>
+        <td><strong>3.91</strong></td>
+      </tr>
+
+      <tr>
+        <td>DiaMoE-TTS</td>
+        <td>57.05</td>
+        <td>0.702</td>
+        <td>3.11</td>
+        <td>3.43</td>
+        <td>3.52</td>
+        <td>82.52</td>
+        <td>0.587</td>
+        <td>2.83</td>
+        <td>3.14</td>
+        <td>3.22</td>
+      </tr>
+
+      <tr>
+        <td>CosyVoice2</td>
+        <td>10.33</td>
+        <td>0.713</td>
+        <td>3.83</td>
+        <td>3.71</td>
+        <td>3.84</td>
+        <td>82.49</td>
+        <td><u>0.618</u></td>
+        <td>3.24</td>
+        <td>3.42</td>
+        <td>3.37</td>
+      </tr>
+
+      <tr style="background-color: rgba(144,238,144,0.35);">
+        <td>CosyVoice2-Wu-CPT</td>
+        <td>6.35</td>
+        <td><strong>0.727</strong></td>
+        <td>4.01</td>
+        <td><strong>3.84</strong></td>
+        <td>3.92</td>
+        <td>32.97</td>
+        <td><strong>0.620</strong></td>
+        <td>3.72</td>
+        <td><strong>3.55</strong></td>
+        <td>3.63</td>
+      </tr>
+
+      <tr style="background-color: rgba(144,238,144,0.35);">
+        <td>CosyVoice2-Wu-SFT</td>
+        <td>6.19</td>
+        <td><u>0.726</u></td>
+        <td>4.32</td>
+        <td><u>3.78</u></td>
+        <td>4.11</td>
+        <td>25.00</td>
+        <td>0.601</td>
+        <td>3.96</td>
+        <td><u>3.48</u></td>
+        <td>3.76</td>
+      </tr>
+
+      <tr style="background-color: rgba(144,238,144,0.35);">
+        <td>CosyVoice2-Wu-SS*</td>
+        <td><strong>5.42</strong></td>
+        <td>--</td>
+        <td><strong>4.37</strong></td>
+        <td>--</td>
+        <td><strong>4.21</strong></td>
+        <td><strong>15.45</strong></td>
+        <td>--</td>
+        <td><strong>4.04</strong></td>
+        <td>--</td>
+        <td><u>3.88</u></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+	
+<style>
+  table.table-bordered {
+    border: 1px solid #bbb;
+    border-collapse: collapse;
+  }
+
+  table.table-bordered th,
+  table.table-bordered td {
+    border: 1px solid #ddd;
+    vertical-align: middle;
+  }
+
+  thead th {
+    background-color: #f6f6f6;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* 仅用于分组列 */
+  .group-tag,
+  .group-type,
+  .group-inst {
+    font-weight: 600;
+    background-color: #fafafa;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* 确保文本列永远正常字重 */
+  .text-cell {
+    font-weight: 400;
+    text-align: left;
+  }
+
+  .prompt-wav-col {
+    background-color: rgba(229, 247, 231, 0.847) !important;
+  }
+</style>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+  <h2 id="TTS" style="text-align:center;">TTS</h2>
+
+  <div class="table-responsive pt-3">
+    <table class="table table-hover table-bordered text-center align-middle">
+      <thead>
+        <tr>
+          <th style="min-width:420px;">Text</th>
+          <th class="prompt-wav-col">High-quality Recorded Single Speaker Prompt For Voice Cloning</th>
+          <th>CosyVoice2-Wu-SS</th>
+          <th>Qwen3-TTS</th>
+          <th class="prompt-wav-col">Prompt Wav For Voice Cloning</th>
+          <th>DiaMoE-TTS</th>
+          <th>CosyVoice2</th>
+          <th>CosyVoice2-Wu-CPT</th>
+          <th>CosyVoice2-Wu-SFT</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Text 1 -->
+        <tr>
+          <td style="text-align:left;">
+            昨日夜里向落了一夜雨，今早起来空气特别清爽，马路浪向也干净交关。<br>English Translation:Last night it rained all night. This morning when I woke up, the air was particularly fresh and the road surface was very clean.
+          </td>
+          <td class="prompt-wav-col" rowspan="10"><audio controls style="width:150px;"><source src="audios/prompt_wav/001050.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/1.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A0002_S0003_0_G0003_G0004_33.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A0002_S0003_0_G0003_G0004_33_0002.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A0002_S0003_0_G0003_G0004_33_1_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A0002_S0003_0_G0003_G0004_33_1_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A0002_S0003_0_G0003_G0004_33_1_3.wav"></audio></td>
+        </tr>
+
+        <!-- Text 2 -->
+        <tr>
+          <td style="text-align:left;">
+            今朝是礼拜六，我准备辣屋里向打扫卫生，拿房间理理清爽。<br>English Translation:Today is Saturday. I'm going to do some cleaning in the house and tidy up the rooms to make them look nice and fresh.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/2.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A0005_S0007_0_G0009_G0010_503.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A0005_S0007_0_G0009_G0010_503_0016.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A0005_S0007_0_G0009_G0010_503_15_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A0005_S0007_0_G0009_G0010_503_15_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A0005_S0007_0_G0009_G0010_503_15_3.wav"></audio></td>
+        </tr>
+
+        <!-- Text 3 -->
+        <tr>
+          <td style="text-align:left;">
+            最近工作浪向有个项目快要结束哉，大家侪辣抓紧辰光做。<br>English Translation:Recently, one of our projects is coming to an end. Everyone should make the most of the time to finish it.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/3.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/3.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A0009_S0005_0_G0017_G0018_389.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A0009_S0005_0_G0017_G0018_389_0025.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A0009_S0005_0_G0017_G0018_389_24_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A0009_S0005_0_G0017_G0018_389_24_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A0009_S0005_0_G0017_G0018_389_24_3.wav"></audio></td>
+        </tr>
+
+        <!-- Text 4 -->
+        <tr>
+          <td style="text-align:left;">
+            我小辰光最怕打针，看到医生就吓得来要命。<br>English Translation:When I was young, I was extremely afraid of getting injections. Just the sight of a doctor would make me extremely nervous.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/4.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/4.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A0038_S0006_0_G0075_G0076_20.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A0038_S0006_0_G0075_G0076_20_0125.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A0038_S0006_0_G0075_G0076_20_124_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A0038_S0006_0_G0075_G0076_20_124_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A0038_S0006_0_G0075_G0076_20_124_3.wav"></audio></td>
+        </tr>
+
+        <!-- Text 4 -->
+        <tr>
+          <td style="text-align:left;">
+            我小辰光常庄到外婆屋里去孛相，外婆总会得拨我吃交关好吃的点心。<br>English Translation:When I was young, I often went to visit my grandmother. My grandmother would always prepare delicious snacks for me to eat.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/5.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/5.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A0038_S0006_0_G0075_G0076_578.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A0038_S0006_0_G0075_G0076_578_0004.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A0038_S0006_0_G0075_G0076_578_3_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A0038_S0006_0_G0075_G0076_578_3_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A0038_S0006_0_G0075_G0076_578_3_3.wav"></audio></td>
+        </tr>
+        <!-- Text 4 -->
+        <tr>
+          <td style="text-align:left;">
+            我老早读书的辰光，每日放学总归要搭同学一道辣路浪向白相一歇再回去。<br>English Translation:When I was young and studying, every day after school, I would always walk home with my classmates, stopping for a rest along the way before returning home.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/6.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/6.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A0038_S0006_0_G0075_G0076_664.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A0038_S0006_0_G0075_G0076_664_0012.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A0038_S0006_0_G0075_G0076_664_11_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A0038_S0006_0_G0075_G0076_664_11_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A0038_S0006_0_G0075_G0076_664_11_3.wav"></audio></td>
+        </tr>
+        <!-- Text 4 -->
+        <tr>
+          <td style="text-align:left;">
+            昨日我搭老朋友碰头，一道吃了顿饭，讲了交关闲话。<br>English Translation:Yesterday, I met with an old friend and we had a meal together. We also chatted about various topics.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/7.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/7.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A1137_S0007_0_G1273_G1274_100.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A1137_S0007_0_G1273_G1274_100_0029.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A1137_S0007_0_G1273_G1274_100_28_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A1137_S0007_0_G1273_G1274_100_28_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A1137_S0007_0_G1273_G1274_100_28_3.wav"></audio></td>
+        </tr>
+        <!-- Text 4 -->
+        <tr>
+          <td style="text-align:left;">
+            我欢喜辣休息日的下半天困个午觉，起来以后精神好交关。<br>English Translation:I enjoy taking a nap in the second half of the day on weekends. After waking up, I feel much more energetic.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/8.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/8.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A1137_S0007_0_G1273_G1274_455.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A1137_S0007_0_G1273_G1274_455_0065.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A1137_S0007_0_G1273_G1274_455_64_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A1137_S0007_0_G1273_G1274_455_64_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A1137_S0007_0_G1273_G1274_455_64_3.wav"></audio></td>
+        </tr>
+        <!-- Text 4 -->
+        <tr>
+          <td style="text-align:left;">
+            我欢喜辣落雪的辰光搭小囡一道堆雪人，虽然手冷，但是开心。<br>English Translation:I enjoy the snowy days with my little daughter, helping her build a snowman. Although my hands are cold, I am very happy.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/9.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/9.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A1154_S0004_0_G1307_G1308_485.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A1154_S0004_0_G1307_G1308_485_0090.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A1154_S0004_0_G1307_G1308_485_89_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A1154_S0004_0_G1307_G1308_485_89_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A1154_S0004_0_G1307_G1308_485_89_3.wav"></audio></td>
+        </tr>
+        <!-- Text 4 -->
+        <tr>
+          <td style="text-align:left;">
+            早浪向买菜的辰光，摊主多送了我两根葱，蛮客气的。<br>English Translation:When I was buying vegetables early that morning, the vendor gave me an extra two scallions as a gesture of politeness.
+          </td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-ss/10.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/qwen3tts/10.wav"></audio></td>
+          <td class="prompt-wav-col"><audio controls style="width:150px;"><source src="audios/prompt_wav/A1189_S0004_0_G1377_G1378_188.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/diamoetts/A1189_S0004_0_G1377_G1378_188_0143.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-base-instruct/A1189_S0004_0_G1377_G1378_188_142_1.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-cpt/A1189_S0004_0_G1377_G1378_188_142_2.wav"></audio></td>
+          <td><audio controls style="width:150px;"><source src="audios/cosyvoice2-sft/A1189_S0004_0_G1377_G1378_188_142_3.wav"></audio></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+  <h2 id="Instruct-TTS" style="text-align:center;">Instruct TTS</h2>
+
+  <div class="table-responsive pt-3">
+    <table class="table table-hover table-bordered align-middle">
+      <thead>
+        <tr>
+          <th style="width:120px;">Type</th>
+          <th style="min-width:100px; width:1%;">Tag</th>
+          <th style="min-width:100px; width:1%;">Instruct</th>
+          <th style="width:300px">Text</th>
+          <th style="width:160px;">CosyVoice2-Wu-SFT</th>
+          <th style="width:160px;">CosyVoice2-Wu-instruct</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- ================= Prosodic Control ================= -->
+        <tr>
+          <td rowspan="6" class="group-tag">Prosodic<br>Control</td>
+          <td rowspan="3" class="group-type">基频低<br>语速慢<br>(low pitch and <br>slow speaking speed)</td>
+          <td rowspan="3" class="group-inst">音调很低，<br>语速很慢地说<br>(speak with a low pitch <br>and a slow speaking speed)</td>
+          <td class="text-cell">阿拉屋里向养了一只小猫，伊老欢喜晒太阳的，每日下半天总归蹲辣窗口。<br>English Translation:Ala Wu had a little cat at home. She loved to bask in the sun and would always stay by the window for most of the day.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-1/baseline_yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_2.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-1/yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_2.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝早浪向我去买早点的辰光，看见街浪向的樱花已经开哉，蛮漂亮的。<br>English Translation:This morning when I went to buy breakfast, I saw that the cherry blossoms along the street had already bloomed, and they looked very beautiful.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-2/baseline_yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-2/yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝是礼拜六，我准备辣屋里向打扫卫生，拿房间理理清爽。<br>English Translation:Today is Saturday. I'm going to do some cleaning in the house and tidy up the rooms to make them look nice and fresh.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-3/baseline_yusuman_jipindi_15_A0002_S0003_0_G0003_G0004_446_15.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/1-3/yusuman_jipindi_15_A0004_S0007_0_G0007_G0008_657_15.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td rowspan="3" class="group-type">基频高<br>语速快<br>(high pitch and <br>fast speaking speed)</td>
+          <td rowspan="3" class="group-inst">音调很高，<br>语速很快地说<br>(speak with a high pitch <br>and a fast speaking speed)</td>
+          <td class="text-cell">阿拉屋里向养了一只小猫，伊老欢喜晒太阳的，每日下半天总归蹲辣窗口。<br>English Translation:Ala Wu had a little cat at home. She loved to bask in the sun and would always stay by the window for most of the day.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-1/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_2.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-1/yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_2.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝早浪向我去买早点的辰光，看见街浪向的樱花已经开哉，蛮漂亮的。<br>English Translation:This morning when I went to buy breakfast, I saw that the cherry blossoms along the street had already bloomed, and they looked very beautiful.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-2/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-2/yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_338_18.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">今朝是礼拜六，我准备辣屋里向打扫卫生，拿房间理理清爽。<br>English Translation:Today is Saturday. I'm going to do some cleaning in the house and tidy up the rooms to make them look nice and fresh.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-3/baseline_yusukuai_jipingao_15_A0002_S0003_0_G0003_G0004_446_15.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/ProsodicControl/2-3/yusukuai_jipingao_15_A0004_S0007_0_G0007_G0008_657_15.wav"></audio></td>
+        </tr>
+
+        <!-- ================= Emotional Control ================= -->
+        <tr>
+          <td rowspan="12" class="group-tag">Emotional<br>Control</td>
+          <td rowspan="3" class="group-type">开心(happy)</td>
+          <td rowspan="3" class="group-inst">用开心的情感说<br>(speak with happiness)</td>
+          <td class="text-cell">今朝天气蛮好，太阳晒得暖烘烘，出去走走真适意！<br>English Translation:The weather is quite nice today. The sun is shining warmly and it's really pleasant to go for a walk!</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/happy-pro-1/b_prompt_happy_010031_0.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/happy-pro-1/a_prompt_happy_010031_0.wav"></audio></td>
+        </tr>
+        <tr>
+            <td class="text-cell">自家种个番茄终于红哉，摘下来生吃，酸酸甜甜味道正正好。<br>English Translation:After growing my own tomatoes, they finally turned red. I picked them and ate them raw. The taste was just right, sweet and sour.</td>
+            <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/happy-pro-1/b_prompt_happy_010031_20.wav"></audio></td>
+            <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/happy-pro-1/a_prompt_happy_010031_20.wav"></audio></td>
+        </tr>
+        
+        <tr>
+          <td class="text-cell">看到小囡在学堂里表演节目，伊在台浪向蹦蹦跳跳，真可爱。<br>English Translation:Seeing Xiaonan performing a show in the school hall, I was so amused by her bouncing and jumping on the stage. She was so adorable.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/happy-pro-1/b_prompt_happy_010031_22.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/happy-pro-1/a_prompt_happy_010031_22.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td rowspan="3" class="group-type">愤怒(angry)</td>
+          <td rowspan="3" class="group-inst">用愤怒的情感说<br>(speak with anger)</td>
+          <td class="text-cell">借了我五百块洋钿，讲过两天还，现在一个月了，影子也看勿见！<br>English Translation:I lent you 500 yuan. We agreed to repay it in two days. But now it's been a month and I haven't even seen your reply!</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/angry-pro-1/b_prompt_angry_020012_6.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/angry-pro-1/a_prompt_angry_020012_6.wav"></audio></td>
+        </tr>
+
+        </tr>
+          <td class="text-cell">我好好叫走路，侬骑车撞到我，连句对不起也勿讲就跑脱？<br>English Translation:I was walking along peacefully. You rode your bike and hit me. Without even saying "I'm sorry", you just ran off?</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/angry-pro-1/b_prompt_angry_020012_24.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/angry-pro-1/a_prompt_angry_020012_24.wav"></audio></td>
+        </tr>
+
+        </tr>
+          <td class="text-cell">搿只菜叶子全是黄个，还拿出来卖，良心痛勿痛？<br>English Translation:All these vegetable leaves are yellow, yet they are still sold. How can one not feel disgusted?</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/angry-pro-1/b_prompt_angry_020012_40.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/angry-pro-1/a_prompt_angry_020012_40.wav"></audio></td>
+        </tr>
+      
+        <tr>
+          <td rowspan="3" class="group-type">悲伤(sad)</td>
+          <td rowspan="3" class="group-inst">用悲伤的情感说<br>(speak with sadness)</td>
+          <td class="text-cell">今朝落班辰光落雨伞也忘记带，衣裳侪湿脱了，真个是触霉头。<br>English Translation:This morning when I finished work, I forgot to bring my umbrella. My clothes got all wet and I was really unlucky.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/sad-pro-1/b_prompt_sad_030371_0.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/sad-pro-1/a_prompt_sad_030371_0.wav"></audio></td>
+        </tr>
+      
+        <tr>
+          <td class="text-cell">养了三年个猫咪昨日走脱了，寻了一夜天也寻勿着，难过煞了。<br>English Translation:I had kept a cat for three years. Yesterday it ran away. I searched all night but couldn't find it. I was extremely sad.</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/sad-pro-1/b_prompt_sad_030371_2.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/sad-pro-1/a_prompt_sad_030371_2.wav"></audio></td>
+        </tr>
+        
+        <tr>
+          <td class="text-cell">辛辛苦苦做个方案，拨领导一眼也看勿上，心里向真个勿是滋味。<br>English Translation:I spent a lot of effort in making a plan, but even the leader couldn't take the time to look at it. How frustrating that is!</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/sad-pro-1/b_prompt_sad_030371_5.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/sad-pro-1/a_prompt_sad_030371_5.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td rowspan="3" class="group-type">惊讶(surprised)</td>
+          <td rowspan="3" class="group-inst">用惊讶的情感说<br>(speak with surprise)</td>
+          <td class="text-cell">哎呀，搿只菜场里向个番茄哪能会得卖到十块洋钿一斤啦，真个是吓煞人！<br>English Translation:Oh dear, how could a tomato from that market possibly be sold at ten dollars a pound? That's really astonishing!</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/b_prompt_surprised_040020_1.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/a_prompt_surprised_040020_1.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">侬晓得伐，小张搿趟考试居然考了全班第一名，平常日脚伊一直中不溜秋个呀！<br>English Translation:You know what? Xiao Zhang actually got the top score in the exam. Usually, he never does so well!</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/b_prompt_surprised_040020_6.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/a_prompt_surprised_040020_6.wav"></audio></td>
+        </tr>
+
+        <tr>
+          <td class="text-cell">啥？侬讲阿拉老师下个号头就要退休啦，伊教书教了三十多年了呀！<br>English Translation:What? You're saying that our teacher is going to retire soon? She has been teaching for over thirty years!</td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/b_prompt_surprised_040020_11.wav"></audio></td>
+          <td class="text-center"><audio controls style="width:150px;"><source src="audios/EmotionalControl/surprised-pro-1/a_prompt_surprised_040020_11.wav"></audio></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+</article>
+</main>
+</div>
+
+</body>
+</html>
