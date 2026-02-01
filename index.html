@@ -150,7 +150,7 @@
     </p>
   </div>
   
-	<p><b>Abstract</b> 
+	<p><b style="font-size: 24px;">Abstract</b>
 		<br>
 		Speech processing for low-resource dialects remains a fundamental challenge in developing inclusive and robust speech technologies.
 		Despite its linguistic significance and large speaker population, the Wu dialect of Chinese has long been hindered by the lack of large-scale speech data, standardized evaluation benchmarks, and publicly available models.
@@ -160,7 +160,7 @@
 		Together, these contributions lay the foundation for a comprehensive Wu dialect speech processing ecosystem, and we open-source proposed datasets, benchmarks, and models to support future research on dialectal speech intelligence
 	
 	<p>
-	<b>Contents</b>
+	<b style="font-size: 24px;">Contents</b>
       <ul>
         <li><a href="#Datapipline—Overview">Data Overview</a></li>
 		<!-- <li><a href="#Demo Video">Demo Video</a></li> -->
@@ -839,16 +839,20 @@
     <u>underlined</u> numbers indicate second-best results.
   </caption>
 
-  <thead>
-    <tr>
-      <th>Model</th>
-      <th>ASR (%) ↓</th>
-      <th>AST (%) ↑</th>
-      <th>Gender ↑</th>
-      <th>Age ↑</th>
-      <th>Emotion ↑</th>
-    </tr>
-  </thead>
+<thead>
+  <tr>
+    <th rowspan="2">Model</th>
+    <th colspan="5">WenetSpeech-Wu-Bench</th>
+  </tr>
+  <tr>
+    <th>ASR CER (%) ↓</th>
+    <th>AST BLEU (%) ↑</th>
+    <th>Gender ACC ↑</th>
+    <th>Age ACC ↑</th>
+    <th>Emotion ACC ↑</th>
+  </tr>
+</thead>
+
 
   <tbody>
     <tr style="background-color: rgba(200,200,200,0.4);">
